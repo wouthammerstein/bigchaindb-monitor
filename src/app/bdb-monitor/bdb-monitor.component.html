@@ -1,0 +1,33 @@
+<div class="container">
+  <h2>WebSocket API Stream Valid Transactions BigchainDB</h2>
+
+  <!-- Box for displaying all alerts -->
+  <div id="alert-box"></div>
+
+  <!-- Div for attachting all outputs -->
+  <div id="output" class="list-group">
+
+    <a *ngFor="let message of messages" href="#" class="list-group-item">
+      <h4 *ngIf="message.type === 'debug'" class="list-group-item-heading">Debug</h4>
+      <h4 *ngIf="message.type === 'error'" class="list-group-item-heading error">Error</h4>
+      <div *ngIf="message.transaction">
+          <div *ngIf="message.transactionDetails">
+            <div *ngIf="message.transactionDetails.operation === 'CREATE'">
+                <h4 class="list-group-item-heading">Create Asset</h4>
+                <pre>Asset ID: {{ message.transactionDetails.id}}</pre>
+                <pre>Asset: {{ JSON.stringify(message.transactionDetails.asset) }}</pre>  
+                <pre>Metadata: {{ JSON.stringify(message.transactionDetails.metadata) }}</pre>
+            </div>
+            <div *ngIf="message.transactionDetails.operation === 'TRANSFER'">
+                <h4 class="list-group-item-heading">Transfer Asset</h4>
+                <pre>Asset ID: {{ message.transactionDetails.asset.id }}</pre>
+                <pre>Metadata: {{ JSON.stringify(message.transactionDetails.metadata) }}</pre>
+            </div>
+          </div>
+        <a class="btn btn-primary" (click)="showAsset(message.transaction.asset_id)">
+          Log asset transaction history to console
+        </a>
+      </div>
+    </a>
+  </div>
+</div>
